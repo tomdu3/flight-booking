@@ -235,3 +235,7 @@ As a user, I want to:
 - Rate limiting
 - CSRF protection
 - XSS prevention
+
+## 7. ERD for the Database
+
+The Entity-Relationship Diagram (ERD) representation for the Flight Booking and Reservation System can be found in the file [ERD.md](./ERD.md).
