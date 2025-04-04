@@ -25,6 +25,9 @@ Built with modern web technologies to deliver a responsive, user-friendly experi
 ![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
+#### Libraries
+- [Express Validator](https://express-validator.github.io/docs/)
+
 ### Integrations
 
 - Payment: Stripe/PayPal
