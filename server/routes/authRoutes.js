@@ -8,11 +8,10 @@ const { registerValidator, loginValidator } = require('../middleware/authValidat
 // Register
 router.post('/register', registerValidator, async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    let { name, email, password } = req.body;
     // trim the inputs
     name = name.trim();
     email = email.trim();
-    password = password.trim();
     console.log(name, email, password);
 
     const userExists = await User.findOne({ email });
@@ -23,17 +22,16 @@ router.post('/register', registerValidator, async (req, res) => {
 
     res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 });
 
 // Login
 router.post('/login', loginValidator, async (req, res) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
     // trim the inputs
     email = email.trim();
-    password = password.trim();
     console.log(email, password);
     
     const user = await User.findOne({ email });
