@@ -2,7 +2,10 @@ const { body, validationResult } = require('express-validator');
 
 // Registration data validator
 const registerValidator = [
-    body('name').notEmpty().withMessage('Name is required'),
+    body('name').notEmpty()
+      .withMessage('Name is required')
+      .trim()  // tirms the whitespaces from the beginning and end of the string
+      .custom(value => !/\s/.test(value)).withMessage('Name should not contain spaces'),
     body('email').isEmail().withMessage('Invalid email format'),
     body('password')
       .isLength({ min: 8 }) // Increased minimum length to accommodate more complexity
