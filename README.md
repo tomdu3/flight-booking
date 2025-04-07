@@ -26,6 +26,7 @@ Built with modern web technologies to deliver a responsive, user-friendly experi
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 
 #### Libraries
+
 - [Express Validator](https://express-validator.github.io/docs/)
 
 ### Integrations
@@ -33,6 +34,7 @@ Built with modern web technologies to deliver a responsive, user-friendly experi
 - Payment: Stripe/PayPal
 - Flight Data: Amadeus API
 - Notifications: Twilio (SMS), Nodemailer (Email)
+- [Aviation Stack](https://www.aviationstack.com/) - for real-time flight data
 
 ## 🚀 Installation
 
