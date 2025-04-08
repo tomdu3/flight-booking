@@ -4,9 +4,18 @@ Content-Type: application/json
 {
   "username": "tom",
   "email": "tom@gmail.com",
-  "password": "1912978!x"
+  "password": "123to?x"
 }
 
+###
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "mick@",
+  "email": "mick@gmail.com",
+  "password": "12Removal{}"
+}
 ###
 
 POST http://localhost:3000/api/auth/login
@@ -16,3 +25,15 @@ Content-Type: application/json
   "email": "tom@gmail.com",
   "password": "123456"
 }
+
+###
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "tom",
+  "password": "pas1sword!" 
+}
+
+###
