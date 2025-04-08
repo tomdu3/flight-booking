@@ -8,19 +8,25 @@ const { registerValidator, loginValidator } = require('../middleware/authValidat
 // Register
 router.post('/register', registerValidator, async (req, res) => {
   try {
-    let { name, email, password } = req.body;
+    let { username, email, password } = req.body;
+
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
     // trim the inputs
-    name = name.trim();
+    username = username.trim();
     email = email.trim();
-    console.log(name, email, password);
+
+    console.log(username, email, password);
 
     const userExists = await User.findOne({ email });
     if (userExists) return res.status(400).json({ message: 'User already exists' });
 
-    const user = await User.create({ name, email, password });
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    res.status(201).json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    const user = await User.create({ username, email, password });
+    const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
+    console.log(accessToken);
+    
+    res.status(201).json({ accessToken, user: { id: user._id, username: user.username, email: user.email } });
   } catch (error) {
     res.status(500).json({ message: error.message || 'Server error' });
   }
@@ -29,21 +35,44 @@ router.post('/register', registerValidator, async (req, res) => {
 // Login
 router.post('/login', loginValidator, async (req, res) => {
   try {
-    let { email, password } = req.body;
-    // trim the inputs
-    email = email.trim();
-    console.log(email, password);
-    
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+    const { email, username, password } = req.body;
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    // Determine login method (email or userusername)
+    const isEmailLogin = !!email;
+    const userQuery = isEmailLogin 
+      ? { email: email.trim() } 
+      : { username: username.trim() };
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+    // Find user
+    const user = await User.findOne(userQuery);
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Verify password
+    const isMatch = await bcrypt.compare(password.trim(), user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    // Generate JWT token
+    const accessToken = jwt.sign(
+      { id: user._id },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
+    );
+
+    // Send success response
+    res.json({
+      accessToken,
+      user: {
+        id: user._id,
+        email: user.email,
+        username: user.username,
+      },
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 });
 
