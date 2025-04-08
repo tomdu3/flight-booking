@@ -1,11 +1,14 @@
-const { body, validationResult } = require('express-validator');
+
+const { body, validationResult, oneOf } = require('express-validator');
 
 // Registration data validator
 const registerValidator = [
-    body('name').notEmpty()
-      .withMessage('Name is required')
+    body('username').notEmpty()
+      .withMessage('Username is required')
       .trim()  // tirms the whitespaces from the beginning and end of the string
-      .custom(value => !/\s/.test(value)).withMessage('Name should not contain spaces'),
+      .custom(value => !/\s/.test(value)).withMessage('Username should not contain spaces')
+      .custom(value => !value.includes('@'))  
+      .withMessage('Username should not contain @ symbol'),
     body('email').isEmail().withMessage('Invalid email format'),
     body('password')
       .isLength({ min: 8 }) // Increased minimum length to accommodate more complexity
@@ -27,8 +30,31 @@ const registerValidator = [
 
 // Login data validator
 const loginValidator = [
-  body('email').isEmail().withMessage('Invalid email format'),
-  body('password').notEmpty().withMessage('Password is required'),
+  // Either email or username must be provided (but not necessarily both)
+  oneOf([
+    [
+      body('email')
+        .exists() // Check if field exists
+        .withMessage('Email is required if username is not provided')
+        .isEmail()
+        .withMessage('Invalid email format')
+        .trim(),
+    ],
+    [
+      body('username')
+        .exists() // Check if field exists
+        .withMessage('Username is required if email is not provided')
+        .notEmpty()
+        .withMessage('Username cannot be empty')
+        .trim(),
+    ],
+  ]),
+  // Password is always required
+  body('password')
+    .notEmpty()
+    .withMessage('Password is required')
+    .trim(),
+  // Handle validation errors
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
