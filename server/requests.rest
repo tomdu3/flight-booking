@@ -12,7 +12,7 @@ POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
 {
-  "username": "mick@",
+  "username": "mick",
   "email": "mick@gmail.com",
   "password": "12Removal{}"
 }
@@ -37,3 +37,10 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:3000/api/auth/logout
+Content-Type: application/json
+
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZjU1ZDY0YTY4YTk1YWVlMDY3YjM5YiIsImlhdCI6MTc0NDEzMzQ3NywiZXhwIjoxNzQ0MTM3MDc3fQ.OTxu2dWNDO8QB0Ayosmr8lx7hWripAFGJZydUUnkvXA"
+}

@@ -106,4 +106,22 @@ router.post('/login', loginValidator, async (req, res) => {
   }
 });
 
+// logout
+router.post('/logout', async (req, res) => {
+  try {
+    const { accessToken } = req.body;
+    if (!accessToken) {
+      return res.status(400).json({ message: 'Missing access token' });
+    }
+    jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: 'Invalid access token' });
+      }
+      res.json({ message: 'Logout successful' });
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message || 'Server error' });
+  }
+});
+
 module.exports = router;
