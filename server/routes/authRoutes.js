@@ -13,21 +13,51 @@ router.post('/register', registerValidator, async (req, res) => {
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
-    // trim the inputs
+    
+    // Trim the inputs
     username = username.trim();
     email = email.trim();
 
-    console.log(username, email, password);
+    console.log('Registration attempt:', { username, email });
 
-    const userExists = await User.findOne({ email });
-    if (userExists) return res.status(400).json({ message: 'User already exists' });
+    // Check if email OR username already exists
+    const existingUser = await User.findOne({ 
+      $or: [
+        { email },
+        { username }
+      ]
+    });
+
+    console.log('Existing user check:', existingUser);
+
+    if (existingUser) {
+      if (existingUser.email === email) {
+        return res.status(400).json({ message: 'Email already in use' });
+      }
+      if (existingUser.username === username) {
+        return res.status(400).json({ message: 'Username already taken' });
+      }
+    }
 
     const user = await User.create({ username, email, password });
-    const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN });
-    console.log(accessToken);
-    
-    res.status(201).json({ accessToken, user: { id: user._id, username: user.username, email: user.email } });
+    const accessToken = jwt.sign(
+      { id: user._id }, 
+      process.env.ACCESS_TOKEN_SECRET, 
+      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
+    );
+
+    console.log('New user created:', { id: user._id, username: user.username });
+
+    res.status(201).json({ 
+      accessToken, 
+      user: { 
+        id: user._id, 
+        username: user.username, 
+        email: user.email 
+      } 
+    });
   } catch (error) {
+    console.error('Registration error:', error);
     res.status(500).json({ message: error.message || 'Server error' });
   }
 });
