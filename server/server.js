@@ -5,6 +5,8 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
+const testRoutes = require("./routes/testRoutes");
+
 const app = express();
 
 // Middleware
@@ -17,10 +19,13 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// Test route
+// Test routes
 app.get("/", (req, res) => {
   res.send("Flight API Running");
+
 });
+
+app.use("/api/test", testRoutes);
 
 // Routes
 app.use("/api/auth", authRoutes);
