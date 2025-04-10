@@ -1,18 +1,15 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-
-
 const authenticateToken = async (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    // Get token from cookies instead of header
+    const token = req.cookies.accessToken;
     
     if (!token) {
         return res.status(401).json({ message: 'Missing token' });
     }
 
     try {
-        // Using await with jwt.verify() which returns a promise when callback isn't provided
         const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         req.userId = decoded.id;
         next();
@@ -30,8 +27,30 @@ const generateAccessToken = (userId) => {
     return jwt.sign(
         { id: userId },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
+        { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || '15s' }
     );
 };
 
-module.exports = { authenticateToken, generateAccessToken };
+const generateRefreshToken = (userId) => {
+    return jwt.sign(
+        { id: userId },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || '7d' }
+    );
+};
+
+const verifyRefreshToken = async (token) => {
+    try {
+        const decoded = await jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+        return { success: true, userId: decoded.id };
+    } catch (error) {
+        return { success: false, error };
+    }
+};
+
+module.exports = { 
+    authenticateToken, 
+    generateAccessToken, 
+    generateRefreshToken,
+    verifyRefreshToken
+};
