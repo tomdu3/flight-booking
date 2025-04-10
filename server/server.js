@@ -5,8 +5,10 @@ const cookieParser = require('cookie-parser');
 
 require("dotenv").config();
 
+// Routes import
 const authRoutes = require("./routes/authRoutes");
 const testRoutes = require("./routes/testRoutes");
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
@@ -24,15 +26,16 @@ mongoose
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.error("MongoDB connection error:", err));
 
+// Routes Middleware
+
+app.use('/api/users', userRoutes);
+app.use("/api/auth", authRoutes);
+
 // Test routes
 app.get("/", (req, res) => {
     res.send("Flight API Running");
 });
-
 app.use("/api/test", testRoutes);
-
-// Routes
-app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

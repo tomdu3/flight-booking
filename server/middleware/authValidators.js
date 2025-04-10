@@ -64,4 +64,9 @@ const loginValidator = [
   },
 ];
 
-module.exports = { registerValidator, loginValidator };
+
+
+module.exports = {
+  registerValidator,
+  loginValidator
+};
