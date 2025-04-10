@@ -1,8 +1,8 @@
 const express = require('express');
-const {authenticateToken} = require('../middleware/jwt');
+const {authenticateWithRefresh} = require('../middleware/jwt');
 const router = express.Router();
 
-router.get('/', authenticateToken, (req, res) => {
+router.get('/', authenticateWithRefresh, (req, res) => {
     res.json({ message: 'Test route' });
 });
 
