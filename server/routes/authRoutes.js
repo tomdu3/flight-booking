@@ -4,7 +4,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { registerValidator, loginValidator } = require('../middleware/authValidators'); // Assuming you saved the validator file in a 'middleware' folder
-const { generateAccessToken } = require('../middleware/jwt');
+const {
+  generateAccessToken,
+  authenticateToken
+} = require('../middleware/jwt');
 
 // Register
 router.post('/register', registerValidator, async (req, res) => {
@@ -14,13 +17,13 @@ router.post('/register', registerValidator, async (req, res) => {
     if (!username || !email || !password) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
-    
+
     // Trim inputs
     username = username.trim();
     email = email.trim();
 
     // Check for existing user
-    const existingUser = await User.findOne({ 
+    const existingUser = await User.findOne({
       $or: [{ email }, { username }]
     });
 
@@ -36,10 +39,10 @@ router.post('/register', registerValidator, async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create user
-    const user = await User.create({ 
-      username, 
-      email, 
-      password: hashedPassword 
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword
     });
 
     // Generate token
@@ -52,15 +55,15 @@ router.post('/register', registerValidator, async (req, res) => {
       email: user.email
     };
 
-    res.status(201).json({ 
-      accessToken, 
+    res.status(201).json({
+      accessToken,
       user: userResponse
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ 
-      message: 'Registration failed', 
-      error: error.message 
+    res.status(500).json({
+      message: 'Registration failed',
+      error: error.message
     });
   }
 });
@@ -72,8 +75,8 @@ router.post('/login', loginValidator, async (req, res) => {
 
     // Determine login method (email or userusername)
     const isEmailLogin = !!email;
-    const userQuery = isEmailLogin 
-      ? { email: email.trim() } 
+    const userQuery = isEmailLogin
+      ? { email: email.trim() }
       : { username: username.trim() };
 
     // Find user
@@ -89,11 +92,7 @@ router.post('/login', loginValidator, async (req, res) => {
     }
 
     // Generate JWT token
-    const accessToken = jwt.sign(
-      { id: user._id },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
-    );
+    const accessToken = generateAccessToken(user._id);
 
     // Send success response
     res.json({
