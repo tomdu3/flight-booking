@@ -3,8 +3,8 @@ Content-Type: application/json
 
 {
   "username": "tom",
-  "email": "tom@gmail.com",
-  "password": "123to?x"
+  "email": "tomdu3@ymail.com",
+  "password": "password1!"
 }
 
 ###
@@ -27,13 +27,21 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "mick@gmail.com",
+  "password": "12Removal{}"
+}
+###
 
 POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
   "username": "tom",
-  "password": "pas1sword!" 
+  "password": "password1!" 
 }
 
 ###
@@ -41,11 +49,31 @@ Content-Type: application/json
 POST http://localhost:3000/api/auth/logout
 Content-Type: application/json
 
-{
-  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZjUyM2NkNmNlMjYwOTlkNjgzNDQzZCIsImlhdCI6MTc0NDI3OTkwNiwiZXhwIjoxNzQ0MjgwODA2fQ.MrkYSuF_Cluyr95VvPvD-MknvdclrXHlzufh_95bI88"
-}
 
 ###
 
 GET http://localhost:3000/api/test
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZjUyM2NkNmNlMjYwOTlkNjgzNDQzZCIsImlhdCI6MTc0NDI4MDExMSwiZXhwIjoxNzQ0MjgwMTI2fQ.wM0GpGPGhsbtk8ttHE7dgkB8dN4pxuvYWutfnF81J14
+
+
+###
+POST http://localhost:3000/api/auth/refresh
+Content-Type: application/json
+
+### User Routes
+# Get current user profile
+GET http://localhost:3000/api/users/profile
+
+### Update user profile
+PUT http://localhost:3000/api/users/profile
+Content-Type: application/json
+
+{
+  "email": "tomdu3@ymail.com",
+  "currentPassword": "pas1sword!!",
+  "newPassword": "password1!",
+  "preferences": {
+    "seat": "window",
+    "meal": "breakfast",
+    "newsletter": true
+  }
+}
