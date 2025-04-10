@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { registerValidator, loginValidator } = require('../middleware/authValidators'); // Assuming you saved the validator file in a 'middleware' folder
+const { generateAccessToken } = require('../middleware/jwt');
 
 // Register
 router.post('/register', registerValidator, async (req, res) => {
@@ -14,51 +15,53 @@ router.post('/register', registerValidator, async (req, res) => {
       return res.status(400).json({ message: 'Missing required fields' });
     }
     
-    // Trim the inputs
+    // Trim inputs
     username = username.trim();
     email = email.trim();
 
-    console.log('Registration attempt:', { username, email });
-
-    // Check if email OR username already exists
+    // Check for existing user
     const existingUser = await User.findOne({ 
-      $or: [
-        { email },
-        { username }
-      ]
+      $or: [{ email }, { username }]
     });
-
-    console.log('Existing user check:', existingUser);
 
     if (existingUser) {
       if (existingUser.email === email) {
         return res.status(400).json({ message: 'Email already in use' });
       }
-      if (existingUser.username === username) {
-        return res.status(400).json({ message: 'Username already taken' });
-      }
+      return res.status(400).json({ message: 'Username already taken' });
     }
 
-    const user = await User.create({ username, email, password });
-    const accessToken = jwt.sign(
-      { id: user._id }, 
-      process.env.ACCESS_TOKEN_SECRET, 
-      { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
-    );
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    console.log('New user created:', { id: user._id, username: user.username });
+    // Create user
+    const user = await User.create({ 
+      username, 
+      email, 
+      password: hashedPassword 
+    });
+
+    // Generate token
+    const accessToken = generateAccessToken(user._id);
+
+    // Omit password in response
+    const userResponse = {
+      id: user._id,
+      username: user.username,
+      email: user.email
+    };
 
     res.status(201).json({ 
       accessToken, 
-      user: { 
-        id: user._id, 
-        username: user.username, 
-        email: user.email 
-      } 
+      user: userResponse
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ message: error.message || 'Server error' });
+    res.status(500).json({ 
+      message: 'Registration failed', 
+      error: error.message 
+    });
   }
 });
 
