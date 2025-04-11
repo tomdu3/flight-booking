@@ -36,6 +36,8 @@ Built with modern web technologies to deliver a responsive, user-friendly experi
 - Notifications: Twilio (SMS), Nodemailer (Email)
 - [Aviation Stack](https://www.aviationstack.com/) - for real-time flight data
 
+- [Data from Our Airports](https://ourairports.com/data/) - for airport (`airports.csv`) and country (`countries.csv`) data
+
 ## 🚀 Installation
 
 ### Prerequisites
