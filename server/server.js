@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 
 require("dotenv").config();
 
+// Database connection import
+const connectDB = require("./db/db");
+
 // Routes import
 const authRoutes = require("./routes/authRoutes");
 const testRoutes = require("./routes/testRoutes");
@@ -21,10 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Database connection
-mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => console.log("MongoDB connected"))
-    .catch((err) => console.error("MongoDB connection error:", err));
+connectDB();
 
 // Routes Middleware
 
