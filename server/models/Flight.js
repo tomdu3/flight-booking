@@ -14,7 +14,11 @@ const flightSchema = new mongoose.Schema({
   duration: { type: Number, required: true }, // in minutes
   price: { type: Number, required: true },
   seatsAvailable: { type: Number, required: true },
-  class: { type: String, enum: ['economy', 'business', 'first'], default: 'economy' }
+  class: { 
+    type: String, 
+    enum: ['economy', 'business', 'first', 'standard'], 
+    default: 'economy' 
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Flight', flightSchema);
