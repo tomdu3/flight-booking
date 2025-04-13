@@ -56,3 +56,4 @@ Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 ### Error Case - Unauthenticated Request
 GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15
 Content-Type: application/json
+
