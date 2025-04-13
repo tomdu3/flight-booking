@@ -60,6 +60,27 @@ class AmadeusService {
       };
     });
   }
+
+  async findAirportCodes(cityName, countryCode = null) {
+    const params = {
+      keyword: cityName,
+      subType: 'AIRPORT,CITY',
+      view: 'LIGHT'
+    };
+    
+    if (countryCode) {
+      params.countryCode = countryCode;
+    }
+  
+    const response = await this.amadeus.referenceData.locations.get(params);
+    
+    // Filter to get airports only and extract IATA codes
+    return response.data
+      .filter(loc => loc.subType === 'AIRPORT')
+      .map(airport => airport.iataCode);
+  }
 }
+
+
 
 module.exports = new AmadeusService();
