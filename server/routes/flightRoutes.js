@@ -6,9 +6,9 @@ const amadeusService = require('../services/amadeusService');
 // Flight search endpoint using Amadeus API
 router.get('/search', authenticateWithRefresh, async (req, res) => {
   try {
-    const { 
-      origin, 
-      destination, 
+    const {
+      origin,
+      destination,
       departureDate,
       returnDate,
       adults,
@@ -22,8 +22,8 @@ router.get('/search', authenticateWithRefresh, async (req, res) => {
 
     // Required parameters validation
     if (!origin || !destination || !departureDate) {
-      return res.status(400).json({ 
-        message: 'Origin, destination, and departure date are required' 
+      return res.status(400).json({
+        message: 'Origin, destination, and departure date are required'
       });
     }
 
@@ -55,10 +55,10 @@ router.get('/search', authenticateWithRefresh, async (req, res) => {
 
   } catch (error) {
     console.error('Flight search error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       message: error.message || 'Error searching flights',
-      error: error.message 
+      error: error.message
     });
   }
 });
@@ -67,10 +67,10 @@ router.get('/search', authenticateWithRefresh, async (req, res) => {
 router.get('/airports', authenticateWithRefresh, async (req, res) => {
   try {
     const { keyword } = req.query;
-    
+
     if (!keyword || keyword.length < 2) {
-      return res.status(400).json({ 
-        message: 'Keyword must be at least 2 characters long' 
+      return res.status(400).json({
+        message: 'Keyword must be at least 2 characters long'
       });
     }
 
@@ -95,10 +95,57 @@ router.get('/airports', authenticateWithRefresh, async (req, res) => {
 
   } catch (error) {
     console.error('Airport search error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
       message: 'Error searching airports',
-      error: error.message 
+      error: error.message
+    });
+  }
+});
+
+// Get best deals endpoint
+router.get('/best-deals', authenticateWithRefresh, async (req, res) => {
+  try {
+    const {
+      origin,
+      destination,
+      departureDate,
+      duration,
+      maxPrice,
+      currency,
+      adults
+    } = req.query;
+
+    if (!origin || !destination || !departureDate) {
+      return res.status(400).json({
+        message: 'Origin, destination, and departure date are required'
+      });
+    }
+
+    const params = {
+      originLocationCode: origin,
+      destinationLocationCode: destination,
+      departureDate: departureDate,
+      currencyCode: currency || 'USD',
+      adults: adults || 1
+    };
+
+    if (duration) params.duration = duration;
+    if (maxPrice) params.maxPrice = maxPrice;
+
+    const deals = await amadeusService.flightOffersSearch(params);
+
+    res.json({
+      success: true,
+      count: deals.length,
+      deals
+    });
+  } catch (error) {
+    console.error('Best deals search error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error searching best deals',
+      error: error.message
     });
   }
 });
