@@ -57,3 +57,7 @@ Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15
 Content-Type: application/json
 
+### Get best deals
+GET http://localhost:3000/api/flights/best-deals?origin=JFK&destination=LAX&departureDate=2025-04-15
+Content-Type: application/json
+Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
