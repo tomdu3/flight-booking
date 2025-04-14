@@ -1,15 +1,64 @@
 const Amadeus = require('amadeus');
-require('dotenv').config();
 
 class AmadeusService {
-  constructor() {
-    this.amadeus = new Amadeus({
-      clientId: process.env.AMADEUS_API_KEY,
-      clientSecret: process.env.AMADEUS_API_SECRET,
-      // Use test environment for development
-      hostname: process.env.NODE_ENV === 'production' ? 'production' : 'test'
-    });
-  }
+    constructor() {
+        this.amadeus = new Amadeus({
+            clientId: process.env.AMADEUS_API_KEY,
+            clientSecret: process.env.AMADEUS_API_SECRET
+        });
+    }
+
+    async createBooking(flightOffer, passengers) {
+        try {
+            // Format passengers according to Amadeus API requirements
+            const formattedTravelers = passengers.map((passenger, index) => ({
+                id: (index + 1).toString(),
+                dateOfBirth: passenger.dateOfBirth,
+                name: {
+                    firstName: passenger.firstName,
+                    lastName: passenger.lastName
+                },
+                contact: {
+                    emailAddress: passenger.email,
+                    phones: [{
+                        deviceType: 'MOBILE',
+                        number: passenger.phone
+                    }]
+                },
+                documents: passenger.passport ? [{
+                    documentType: 'PASSPORT',
+                    number: passenger.passport.number,
+                    expiryDate: passenger.passport.expiryDate,
+                    issuanceCountry: passenger.passport.issuanceCountry,
+                    nationality: passenger.passport.issuanceCountry
+                }] : []
+            }));
+
+            const response = await this.amadeus.booking.flightOrders.post(
+                JSON.stringify({
+                    data: {
+                        type: 'flight-order',
+                        flightOffers: [flightOffer],
+                        travelers: formattedTravelers
+                    }
+                })
+            );
+
+            return response.data;
+        } catch (error) {
+            console.error('Amadeus booking error:', error);
+            throw new Error('Failed to create booking with Amadeus');
+        }
+    }
+
+    async cancelBooking(bookingId) {
+        try {
+            await this.amadeus.booking.flightOrder(bookingId).delete();
+        } catch (error) {
+            console.error('Amadeus cancellation error:', error);
+            throw new Error('Failed to cancel booking with Amadeus');
+        }
+    }
 
   async flightOffersSearch(params) {
     try {

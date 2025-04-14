@@ -61,3 +61,86 @@ Content-Type: application/json
 GET http://localhost:3000/api/flights/best-deals?origin=JFK&destination=LAX&departureDate=2025-04-15
 Content-Type: application/json
 Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
+
+### Bookings
+### Create Booking
+POST http://localhost:3000/api/bookings
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "flightOffer": {
+    "id": "1",
+    "airline": "F9",
+    "flightNumber": "3237",
+    "departureAirport": "JFK",
+    "arrivalAirport": "ONT",
+    "departureTime": "2025-04-15T06:59:00",
+      "arrivalTime": "2025-04-15T15:04:00",
+      "duration": "PT11H5M",
+      "stops": 1,
+      "price": "200.63",
+      "currency": "USD",
+      "bookingClass": "STANDARD",
+      "availableSeats": 3,
+      "segments": [
+        {
+          "departure": {
+            "airport": "JFK",
+            "time": "2025-04-15T06:59:00"
+          },
+          "arrival": {
+            "airport": "LAS",
+            "terminal": "3",
+            "time": "2025-04-15T09:51:00"
+          },
+          "carrierCode": "F9",
+          "flightNumber": "3237",
+          "aircraft": "32Q",
+          "duration": "PT5H52M"
+        },
+        {
+          "departure": {
+            "airport": "LAS",
+            "terminal": "3",
+            "time": "2025-04-15T13:53:00"
+          },
+          "arrival": {
+            "airport": "ONT",
+            "time": "2025-04-15T15:04:00"
+          },
+          "carrierCode": "F9",
+          "flightNumber": "1357",
+          "aircraft": "32N",
+          "duration": "PT1H11M"
+        }
+    ]
+  },
+  "passengers": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "dateOfBirth": "1980-01-15",
+      "email": "john.doe@example.com",
+      "phone": "+1234567890",
+      "passport": {
+        "number": "AB1234567",
+        "expiryDate": "2030-01-01",
+        "issuanceCountry": "US"
+      }
+    }
+  ]
+}
+
+### Get User Booking
+GET http://localhost:3000/api/bookings
+Authorization: Bearer {{auth_token}}
+
+### Get Booking by ID
+GET http://localhost:3000/api/bookings/{{booking_id}}
+Authorization: Bearer {{auth_token}}
+
+### Cancel Booking
+DELETE http://localhost:3000/api/bookings/{{booking_id}}
+Authorization: Bearer {{auth_token}}
+

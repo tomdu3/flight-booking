@@ -13,7 +13,7 @@ const authRoutes = require("./routes/authRoutes");
 const testRoutes = require("./routes/testRoutes");
 const userRoutes = require('./routes/userRoutes');
 const flightRoutes = require('./routes/flightRoutes');
-// const bookingRoutes = require('./routes/bookingRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
 
 const app = express();
 
@@ -33,7 +33,7 @@ connectDB();
 app.use('/api/users', userRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/api/flights', flightRoutes);
-// app.use('/api/bookings', bookingRoutes);
+app.use('/api/bookings', bookingRoutes);
 
 // Test routes
 app.get("/", (req, res) => {
