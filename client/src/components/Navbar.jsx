@@ -13,38 +13,35 @@ export const Navbar = () => {
       <nav className="flex justify-between items-center w-[90%] h-12 md:h-16 px-4 py-2 bg-gray-100/70 backdrop-blur-sm shadow-xl rounded-xl">
         {/* Logo */}
         <div className="flex items-center font-title font-bold text-xl">
-          Logo
+          SkyRace
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           <ul className="flex items-center gap-8">
             <li>
-              <a href="#" className="text-lg font-title hover:text-blue-600 transition-colors">
+              <a href="#" className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors">
                 Home
               </a>
             </li>
             <li>
-              <a href="#" className="text-lg font-title hover:text-blue-600 transition-colors">
+              <a href="#" className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors">
                 About
               </a>
             </li>
             <li>
-              <a href="#" className="text-lg font-title hover:text-blue-600 transition-colors">
+              <a href="#" className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors">
                 Contact
               </a>
             </li>
           </ul>
 
           <div className="flex items-center gap-6">
-            <a href="#" className="font-title text-blue-600 hover:text-blue-800 transition-colors">
+            <a href="#" className="font-title text-[var(--clr-primary)] hover:text-[var(--clr-primary-hover)] transition-colors">
               Sign In
             </a>
             <a href="#" className="font-title text-gray-600 hover:text-black transition-colors">
               Sign Up
-            </a>
-            <a href="#" className="font-title text-gray-400 hover:text-gray-600 transition-colors">
-              Sign Out
             </a>
           </div>
         </div>
@@ -65,7 +62,7 @@ export const Navbar = () => {
               <li>
                 <a 
                   href="#" 
-                  className="text-lg font-title hover:text-blue-600 transition-colors"
+                  className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Home
@@ -74,7 +71,7 @@ export const Navbar = () => {
               <li>
                 <a 
                   href="#" 
-                  className="text-lg font-title hover:text-blue-600 transition-colors"
+                  className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   About
@@ -83,7 +80,7 @@ export const Navbar = () => {
               <li>
                 <a 
                   href="#" 
-                  className="text-lg font-title hover:text-blue-600 transition-colors"
+                  className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Contact
@@ -92,7 +89,7 @@ export const Navbar = () => {
               <div className="flex flex-col items-center gap-4 pt-4 border-t border-gray-300 w-full">
                 <a 
                   href="#" 
-                  className="font-title text-blue-600 hover:text-blue-800 transition-colors"
+                  className="font-title text-[var(--clr-primary)] hover:text-[var(--clr-primary-hover)] transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Sign In
@@ -103,13 +100,6 @@ export const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                 >
                   Sign Up
-                </a>
-                <a 
-                  href="#" 
-                  className="font-title text-gray-400 hover:text-gray-600 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Sign Out
                 </a>
               </div>
             </ul>

@@ -8,7 +8,7 @@ export const FlightSearch = () => {
   const [tripType, setTripType] = useState('roundtrip');
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+    <section className="flex flex-col items-center justify-center min-h-[90vh] p-4">
       <div className="w-full max-w-[90%] bg-white/95 rounded-xl shadow-lg p-6 md:p-8 border border-gray-100"> 
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
@@ -22,13 +22,13 @@ export const FlightSearch = () => {
         <div className="flex mb-6 border-b border-gray-200">
           <button
             onClick={() => setTripType('roundtrip')}
-            className={`px-4 py-2 font-medium ${tripType === 'roundtrip' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+            className={`px-4 py-2 font-medium ${tripType === 'roundtrip' ? 'text-[var(--clr-primary)] border-b-2 border-[var(--clr-primary)]' : 'text-gray-500 hover:text-gray-700'}`}
           >
             Round Trip
           </button>
           <button
             onClick={() => setTripType('oneway')}
-            className={`px-4 py-2 font-medium ${tripType === 'oneway' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'}`}
+            className={`px-4 py-2 font-medium ${tripType === 'oneway' ? 'text-[var(--clr-primary)] border-b-2 border-[var(--clr-primary)]' : 'text-gray-500 hover:text-gray-700'}`}
           >
             One Way
           </button>
@@ -44,7 +44,7 @@ export const FlightSearch = () => {
                 id="departure"
                 type="text" 
                 placeholder="City or Airport" 
-                className="w-full rounded-lg border border-gray-300 p-3 pl-10 text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full rounded-lg border border-gray-300 p-3 pl-10 text-base focus:border-[var(--clr-primary)] focus:ring-2 focus:ring-blue-100 transition-all"
               />
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -64,7 +64,7 @@ export const FlightSearch = () => {
                 id="destination"
                 type="text" 
                 placeholder="City or Airport" 
-                className="w-full rounded-lg border border-gray-300 p-3 pl-10 text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full rounded-lg border border-gray-300 p-3 pl-10 text-base focus:border-[var(--clr-primary)] focus:ring-2 focus:ring-blue-100 transition-all"
               />
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -85,7 +85,7 @@ export const FlightSearch = () => {
                 selected={departureDate}
                 onChange={(date) => setDepartureDate(date)}
                 placeholderText="Select date"
-                className="w-full rounded-lg border border-gray-300 p-3 pl-10 text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full rounded-lg border border-gray-300 p-3 pl-10 text-base focus:border-[var(--clr-primary)] focus:ring-2 focus:ring-blue-100 transition-all"
                 minDate={new Date()}
                 dateFormat="MMM d, yyyy"
               />
@@ -107,7 +107,7 @@ export const FlightSearch = () => {
                 selected={returnDate}
                 onChange={(date) => setReturnDate(date)}
                 placeholderText="Select date"
-                className="w-full rounded-lg border border-gray-300 p-3 pl-10 text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all"
+                className="w-full rounded-lg border border-gray-300 p-3 pl-10 text-base focus:border-[var(--clr-primary)] focus:ring-2 focus:ring-blue-100 transition-all"
                 minDate={departureDate || new Date()}
                 dateFormat="MMM d, yyyy"
                 disabled={tripType === 'oneway'}
@@ -123,7 +123,7 @@ export const FlightSearch = () => {
           <div className="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center mt-2">
             <button 
               type="submit" 
-              className="w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-base transition-all duration-300 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="btn-primary w-full md:w-auto px-8 py-3"
             >
               Search Flights
               <svg className="w-4 h-4 ml-2 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,6 +133,6 @@ export const FlightSearch = () => {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };

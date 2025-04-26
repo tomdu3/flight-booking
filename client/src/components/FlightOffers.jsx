@@ -42,18 +42,18 @@ export const FlightOffers = () => {
     ];
   
     return (
-      <div className="py-12 bg-gray-50">
+      <section className="section bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Best Flight Offers</h2>
-            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center">
+            <h2 className="section-title">Best Flight Offers</h2>
+            <p className="section-subtitle">
               Discover our most popular flight routes at competitive prices
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {offers.map((offer) => (
-              <div key={offer.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div key={offer.id} className="card">
                 <div className="p-6">
                   <div className="flex items-center mb-4">
                     <img className="h-10 w-10 object-contain" src={offer.logo} alt={offer.airline} />
@@ -90,14 +90,14 @@ export const FlightOffers = () => {
                   <div className="flex justify-between items-center pt-4 border-t border-gray-100">
                     <p className="text-sm text-gray-500">{offer.date}</p>
                     <div className="text-right">
-                      <p className="text-lg font-bold text-blue-600">{offer.price}</p>
+                      <p className="text-lg font-bold text-[var(--clr-primary)]">{offer.price}</p>
                       <p className="text-xs text-gray-500">per person</p>
                     </div>
                   </div>
                 </div>
                 
                 <div className="bg-gray-50 px-6 py-4">
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+                  <button className="btn-primary w-full">
                     Book Now
                   </button>
                 </div>
@@ -106,7 +106,7 @@ export const FlightOffers = () => {
           </div>
           
           <div className="text-center mt-10">
-            <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors duration-300">
+            <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-[var(--clr-primary)] bg-blue-100 hover:bg-blue-200 transition-colors duration-300">
               View All Offers
               <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -114,6 +114,6 @@ export const FlightOffers = () => {
             </button>
           </div>
         </div>
-      </div>
+      </section>
     );
   };

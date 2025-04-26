@@ -1,14 +1,15 @@
 import { Outlet } from 'react-router-dom';
-import './App.css'
+import './App.css';
 
 function App() {
-
-
   return (
     <>
-      <Outlet />
+      <div className="background-container" aria-hidden="true"></div>
+      <div className="min-h-screen">
+        <Outlet />
+      </div>
     </>
-  )
+  );
 }
 
 export default App;

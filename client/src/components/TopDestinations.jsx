@@ -35,11 +35,11 @@ export const TopDestinations = () => {
     ];
   
     return (
-      <div className="py-16 bg-white">
+      <section className="section bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Top Destinations</h2>
-            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center">
+            <h2 className="section-title">Top Destinations</h2>
+            <p className="section-subtitle">
               Explore our most popular destinations around the world
             </p>
           </div>
@@ -70,6 +70,6 @@ export const TopDestinations = () => {
             ))}
           </div>
         </div>
-      </div>
+      </section>
     );
   };
