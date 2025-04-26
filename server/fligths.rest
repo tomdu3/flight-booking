@@ -9,27 +9,27 @@ Content-Type: application/json
 }
 
 ### Flight Search - One Way
-GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15
+GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-30
 Content-Type: application/json
 Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 
 ### Flight Search - Round Trip
-GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15&returnDate=2025-04-20
+GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-30&returnDate=2025-05-15
 Content-Type: application/json
 Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 
 ### Flight Search - With Class and Passengers
-GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15&travelClass=ECONOMY&adults=2&children=1
+GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-30&travelClass=ECONOMY&adults=2&children=1
 Content-Type: application/json
 Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 
 ### Flight Search - Non-Stop Only
-GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15&nonStop=true
+GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-30&nonStop=true
 Content-Type: application/json
 Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 
 ### Flight Search - With Price Limit
-GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15&maxPrice=500&cy=USD
+GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-30&maxPrice=500&cy=USD
 Content-Type: application/json
 Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 
