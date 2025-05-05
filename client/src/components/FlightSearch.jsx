@@ -12,24 +12,24 @@ export const FlightSearch = () => {
 
   return (
     <section className="section flex flex-col items-center justify-center">
-      <div className="container mx-auto px-4">
-        <div className="w-full bg-[var(--clr-card-background)]/90 rounded-xl shadow-xl p-6 md:p-10 border border-[var(--clr-border)]"> 
+      {/* Use consistent container like Navbar */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8"> 
+        {/* Apply Navbar styling: bg, blur, shadow, rounded, border, margin, padding */}
+        <div className="w-full bg-[var(--clr-card-background)]/70 backdrop-blur-md shadow-md rounded-xl mt-4 border border-[var(--clr-border)] p-6 md:p-10"> 
           <div className="text-center mb-8">
-            {/* Added font-title class */}
             <h1 className="section-title font-title">Find Your Perfect Flight</h1>
-            {/* Added font-text class */}
             <p className="section-subtitle font-text">
               Search and compare flights from hundreds of airlines
             </p>
           </div>
 
-          {/* Trip Type Selection - Use refined primary colors */}
+          {/* Trip Type Selection */}
           <div className="flex justify-center mb-8">
             <button
               onClick={() => setTripType('roundtrip')}
               className={`px-6 py-3 font-title text-lg transition-colors duration-300 
                 ${tripType === 'roundtrip' 
-                  ? 'bg-[var(--clr-primary)]/90 text-white rounded-l-lg' 
+                  ? 'bg-[var(--clr-primary)] text-white rounded-l-lg' 
                   : 'bg-gray-200 text-[var(--clr-text)] hover:bg-gray-300 rounded-l-lg'}
               `}
             >
@@ -39,7 +39,7 @@ export const FlightSearch = () => {
               onClick={() => setTripType('oneway')}
               className={`px-6 py-3 font-title text-lg transition-colors duration-300 
                 ${tripType === 'oneway' 
-                  ? 'bg-[var(--clr-primary)]/90 text-white rounded-r-lg' 
+                  ? 'bg-[var(--clr-primary)] text-white rounded-r-lg' 
                   : 'bg-gray-200 text-[var(--clr-text)] hover:bg-gray-300 rounded-r-lg'}
               `}
             >
@@ -47,7 +47,7 @@ export const FlightSearch = () => {
             </button>
           </div>
 
-          {/* Search Form - Refined input styles */}
+          {/* Search Form */}
           <form className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* From Input */}
             <div className="col-span-1 md:col-span-2 lg:col-span-1">
