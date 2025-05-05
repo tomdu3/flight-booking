@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom'; 
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,103 +10,107 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="py-4 flex justify-center items-center">
-      <nav className="flex justify-between items-center w-[90%] h-12 md:h-16 px-4 py-2 bg-gray-100/70 backdrop-blur-sm shadow-xl rounded-xl">
-        {/* Logo */}
-        <div className="flex items-center font-title font-bold text-xl">
-          SkyRace
-        </div>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <ul className="flex items-center gap-8">
-            <li>
-              <a href="#" className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors">
-                Contact
-              </a>
-            </li>
-          </ul>
-
-          <div className="flex items-center gap-6">
-            <a href="#" className="font-title text-[var(--clr-primary)] hover:text-[var(--clr-primary-hover)] transition-colors">
-              Sign In
-            </a>
-            <a href="#" className="font-title text-gray-600 hover:text-black transition-colors">
-              Sign Up
-            </a>
+    <header className="relative z-50 w-full">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8"> 
+        <nav className="flex justify-between items-center py-3 md:py-4 bg-[var(--clr-card-background)]/70 backdrop-blur-md shadow-md rounded-xl mt-4 border border-[var(--clr-border)] px-6"> 
+          {/* Logo */}
+          <div className="flex items-center font-title font-extrabold text-2xl text-[var(--clr-primary)]">
+            SkyRace
           </div>
-        </div>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          className="md:hidden text-gray-700 focus:outline-none"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-        </button>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8"> 
+            <ul className="flex items-center gap-8"> 
+              <li>
+                <Link to="/" className="text-lg font-title text-[var(--clr-text)] hover:text-[var(--clr-primary)] transition-colors duration-300 px-3 py-2">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-lg font-title text-[var(--clr-text)] hover:text-[var(--clr-primary)] transition-colors duration-300 px-3 py-2">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-lg font-title text-[var(--clr-text)] hover:text-[var(--clr-primary)] transition-colors duration-300 px-3 py-2">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+
+            <div className="flex items-center gap-3"> 
+              {/* Using btn-outline-primary for Sign In */} 
+              <button className="btn-outline-primary font-title px-4 py-2">
+                Sign In
+              </button>
+              {/* Using btn-primary for Sign Up */} 
+              <button className="btn-primary font-title px-4 py-2">
+                Sign Up
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            className="md:hidden text-[var(--clr-text)] focus:outline-none p-2"
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
+        </nav>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden absolute top-24 left-0 right-0 bg-gray-100/95 backdrop-blur-sm shadow-lg mx-4 rounded-xl z-50 py-4 px-6">
-            <ul className="flex flex-col items-center gap-6">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-[var(--clr-card-background)]/70 backdrop-blur-md shadow-lg mx-4 rounded-b-xl z-50 py-4 px-6 origin-top animate-open-menu border border-t-0 border-[var(--clr-border)]">
+            <ul className="flex flex-col items-center gap-4"> 
               <li>
-                <a 
-                  href="#" 
-                  className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors"
+                <Link
+                  to="/"
+                  className="text-lg font-title text-[var(--clr-text)] hover:text-[var(--clr-primary)] transition-colors duration-300 py-2"
                   onClick={() => setIsOpen(false)}
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
-                  href="#" 
-                  className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors"
+                <Link
+                  to="/about"
+                  className="text-lg font-title text-[var(--clr-text)] hover:text-[var(--clr-primary)] transition-colors duration-300 py-2"
                   onClick={() => setIsOpen(false)}
                 >
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a 
-                  href="#" 
-                  className="text-lg font-title hover:text-[var(--clr-primary)] transition-colors"
+                <Link
+                  to="/contact"
+                  className="text-lg font-title text-[var(--clr-text)] hover:text-[var(--clr-primary)] transition-colors duration-300 py-2"
                   onClick={() => setIsOpen(false)}
                 >
                   Contact
-                </a>
+                </Link>
               </li>
-              <div className="flex flex-col items-center gap-4 pt-4 border-t border-gray-300 w-full">
-                <a 
-                  href="#" 
-                  className="font-title text-[var(--clr-primary)] hover:text-[var(--clr-primary-hover)] transition-colors"
+              <div className="flex flex-col items-center gap-3 pt-4 border-t border-[var(--clr-border)] w-full mt-4">
+                {/* Using btn-outline-primary for Sign In */} 
+                <button
+                  className="btn-outline-primary font-title w-full py-3"
                   onClick={() => setIsOpen(false)}
                 >
                   Sign In
-                </a>
-                <a 
-                  href="#" 
-                  className="font-title text-gray-600 hover:text-black transition-colors"
+                </button>
+                {/* Using btn-primary for Sign Up */} 
+                <button
+                  className="btn-primary font-title w-full py-3"
                   onClick={() => setIsOpen(false)}
                 >
                   Sign Up
-                </a>
+                </button>
               </div>
             </ul>
           </div>
         )}
-      </nav>
-    </div>
+      </div>
+    </header>
   );
 };

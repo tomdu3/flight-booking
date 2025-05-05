@@ -5,62 +5,67 @@ import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
-    <footer className='bg-[var(--clr-secondary)] text-gray-300 pt-12 pb-6'>
+    <footer className='bg-[var(--clr-secondary)] text-[var(--clr-light)] pt-12 pb-8 font-text'> {/* Use secondary background, light text color, and text font */} 
       <div className='container mx-auto px-4'>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10'> {/* Increased gap and bottom margin */} 
           {/* Company Info */}
-          <div className='lg:col-span-2'>
-            <h3 className='text-2xl font-bold text-white mb-4'>
+          <div className='lg:col-span-2 pr-8'> {/* Added right padding on large screens */} 
+            <h3 className='text-3xl font-title font-extrabold text-white mb-4'> {/* Larger, bolder title with white color */} 
               Sky<span className='text-[var(--clr-primary)]'>Race</span>
             </h3>
-            <p className='mb-4'>
+            <p className='mb-6 text-gray-300'> {/* Increased bottom margin and slightly lighter gray text */} 
               Making travel simple, affordable, and accessible for everyone
               around the world.
             </p>
-            <div className='flex space-x-4'>
+            <div className='flex space-x-6'> {/* Increased space between icons */} 
               <a
                 href='#'
-                className='text-gray-400 hover:text-white transition-colors'
+                className='text-gray-400 hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
+                aria-label="Facebook"
               >
-                <FaFacebook size={20} />
+                <FaFacebook size={24} /> {/* Larger icons */} 
               </a>
               <a
                 href='#'
-                className='text-gray-400 hover:text-white transition-colors'
+                className='text-gray-400 hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
+                aria-label="Twitter"
               >
-                <FaXTwitter size={20} />
+                <FaXTwitter size={24} /> {/* Larger icons */} 
               </a>
               <a
                 href='#'
-                className='text-gray-400 hover:text-white transition-colors'
+                className='text-gray-400 hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
+                aria-label="Instagram"
               >
-                <FaInstagram size={20} />
+                <FaInstagram size={24} /> {/* Larger icons */} 
               </a>
               <a
                 href='#'
-                className='text-gray-400 hover:text-white transition-colors'
+                className='text-gray-400 hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
+                aria-label="LinkedIn"
               >
-                <FaLinkedin size={20} />
+                <FaLinkedin size={24} /> {/* Larger icons */} 
               </a>
               <a
                 href='#'
-                className='text-gray-400 hover:text-white transition-colors'
+                className='text-gray-400 hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
+                aria-label="YouTube"
               >
-                <FaYoutube size={20} />
+                <FaYoutube size={24} /> {/* Larger icons */} 
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className='text-white font-semibold text-lg mb-4'>
+            <h4 className='text-xl font-title font-semibold text-white mb-4'> {/* Title font, larger size, white color */} 
               Quick Links
             </h4>
-            <ul className='space-y-2'>
+            <ul className='space-y-3 text-gray-300'> {/* Increased space and slightly lighter gray text */} 
               <li>
                 <Link
                   to='/about'
-                  className='hover:text-white transition-colors'
+                  className='hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
                 >
                   About Us
                 </Link>
@@ -68,7 +73,7 @@ export const Footer = () => {
               <li>
                 <Link
                   to='/flights'
-                  className='hover:text-white transition-colors'
+                  className='hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
                 >
                   Flights
                 </Link>
@@ -76,7 +81,7 @@ export const Footer = () => {
               <li>
                 <Link
                   to='/destinations'
-                  className='hover:text-white transition-colors'
+                  className='hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
                 >
                   Destinations
                 </Link>
@@ -84,7 +89,7 @@ export const Footer = () => {
               <li>
                 <Link
                   to='/deals'
-                  className='hover:text-white transition-colors'
+                  className='hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
                 >
                   Special Deals
                 </Link>
@@ -92,7 +97,7 @@ export const Footer = () => {
               <li>
                 <Link
                   to='/contact'
-                  className='hover:text-white transition-colors'
+                  className='hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
                 >
                   Contact Us
                 </Link>
@@ -102,20 +107,20 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className='text-white font-semibold text-lg mb-4'>
+            <h4 className='text-xl font-title font-semibold text-white mb-4'> {/* Title font, larger size, white color */} 
               Contact Us
             </h4>
-            <ul className='space-y-3'>
+            <ul className='space-y-4 text-gray-300'> {/* Increased space and slightly lighter gray text */} 
               <li className='flex items-start'>
-                <MdLocationOn className='mt-1 mr-2 flex-shrink-0' />
+                <MdLocationOn className='mt-1 mr-3 flex-shrink-0 text-[var(--clr-primary)]' size={20} /> {/* Icon with primary color and size */} 
                 <span>123 Uxbridge Road, Flat 3, W13 9AU</span>
               </li>
               <li className='flex items-center'>
-                <MdPhone className='mr-2' />
+                <MdPhone className='mr-3 text-[var(--clr-primary)]' size={20} /> {/* Icon with primary color and size */} 
                 <span>+44 7123-4567</span>
               </li>
               <li className='flex items-center'>
-                <MdEmail className='mr-2' />
+                <MdEmail className='mr-3 text-[var(--clr-primary)]' size={20} /> {/* Icon with primary color and size */} 
                 <span>info@skyrace.com</span>
               </li>
             </ul>
@@ -123,43 +128,43 @@ export const Footer = () => {
         </div>
 
         {/* Newsletter */}
-        <div className='mb-8 md:w-[500px]'>
-          <h4 className='text-white font-semibold text-lg mb-4'>
+        <div className='mb-8 md:w-full lg:w-[400px] mx-auto'> {/* Centered and adjusted width */} 
+          <h4 className='text-xl font-title font-semibold text-white mb-4 text-center'> {/* Centered text */} 
             Subscribe to our Newsletter
           </h4>
-          <div className='flex flex-col sm:flex-row gap-2'>
+          <div className='flex flex-col sm:flex-row gap-3'> {/* Increased gap */} 
             <input
               type='email'
               placeholder='Your email address'
-              className='flex-grow px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[var(--clr-primary)]'
+              className='flex-grow px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--clr-primary)] transition-colors duration-300' // Refined input styles
             />
-            <button className='bg-[var(--clr-primary)] hover:bg-[var(--clr-primary-hover)] text-white px-6 py-2 rounded transition-colors'>
+            <button className='btn-primary px-6 py-3 font-title text-lg'> {/* Applied btn-primary and adjusted padding/font */} 
               Subscribe
             </button>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className='border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center'>
-          <p className='text-sm text-gray-500 mb-4 md:mb-0'>
+        <div className='border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center'> {/* Lighter border */} 
+          <p className='text-sm text-gray-400 mb-4 md:mb-0'> {/* Slightly lighter gray text */} 
             &copy; {new Date().getFullYear()} SkyRace. All rights reserved.
           </p>
-          <div className='flex space-x-6'>
+          <div className='flex space-x-6 text-gray-400'> {/* Slightly lighter gray text */} 
             <Link
               to='/privacy'
-              className='text-sm hover:text-white transition-colors'
+              className='hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
             >
               Privacy Policy
             </Link>
             <Link
               to='/terms'
-              className='text-sm hover:text-white transition-colors'
+              className='hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
             >
               Terms of Service
             </Link>
             <Link
               to='/cookies'
-              className='text-sm hover:text-white transition-colors'
+              className='hover:text-[var(--clr-primary)] transition-colors duration-300' // Hover primary color
             >
               Cookie Policy
             </Link>

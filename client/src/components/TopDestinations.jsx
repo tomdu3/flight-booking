@@ -4,7 +4,7 @@ export const TopDestinations = () => {
         id: 1,
         city: "Paris",
         country: "France",
-        image: "/paris.jpg",
+        image: "/paris.jpg", // Make sure these images exist in the public folder
         flights: "24 daily flights",
         price: "$299"
       },
@@ -35,9 +35,10 @@ export const TopDestinations = () => {
     ];
   
     return (
-      <section className="section bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
+      <section className="section bg-[var(--clr-background)]"> {/* Use background color variable */}
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+             {/* Section title and subtitle classes already use the new colors from App.css */}
             <h2 className="section-title">Top Destinations</h2>
             <p className="section-subtitle">
               Explore our most popular destinations around the world
@@ -46,19 +47,21 @@ export const TopDestinations = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {destinations.map((destination) => (
-              <div key={destination.id} className="group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+              <div key={destination.id} className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-[var(--clr-border)]"> {/* Use border color variable */} 
                 <img 
-                  className="h-64 w-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
+                  className="h-72 w-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
                   src={destination.image} 
                   alt={`${destination.city}, ${destination.country}`} 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-90"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-xl font-bold text-white">{destination.city}</h3>
-                  <p className="text-gray-300">{destination.country}</p>
-                  <div className="mt-3 flex justify-between items-center">
-                    <p className="text-sm text-gray-300">{destination.flights}</p>
-                    <p className="text-lg font-bold text-white">{destination.price}</p>
+                {/* Adjusted gradient and opacity */} 
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--clr-dark)] via-[var(--clr-dark)]/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300"></div> 
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-2xl font-title font-bold mb-1">{destination.city}</h3>
+                  <p className="text-sm font-text text-gray-300">{destination.country}</p>
+                  <div className="mt-4 flex justify-between items-center">
+                    <p className="text-sm font-text text-gray-300">{destination.flights}</p>
+                    {/* Use primary color for price */} 
+                    <p className="text-xl font-bold text-[var(--clr-primary)]">{destination.price}</p> 
                   </div>
                 </div>
                 <a 
