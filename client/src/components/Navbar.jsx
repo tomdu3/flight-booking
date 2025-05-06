@@ -39,11 +39,9 @@ export const Navbar = () => {
             </ul>
 
             <div className="flex items-center gap-3"> 
-              {/* Using btn-outline-primary for Sign In */} 
               <button className="btn-outline-primary font-title px-4 py-2">
                 Sign In
               </button>
-              {/* Using btn-primary for Sign Up */} 
               <button className="btn-primary font-title px-4 py-2">
                 Sign Up
               </button>
@@ -92,14 +90,12 @@ export const Navbar = () => {
                 </Link>
               </li>
               <div className="flex flex-col items-center gap-3 pt-4 border-t border-[var(--clr-border)] w-full mt-4">
-                {/* Using btn-outline-primary for Sign In */} 
                 <button
                   className="btn-outline-primary font-title w-full py-3"
                   onClick={() => setIsOpen(false)}
                 >
                   Sign In
                 </button>
-                {/* Using btn-primary for Sign Up */} 
                 <button
                   className="btn-primary font-title w-full py-3"
                   onClick={() => setIsOpen(false)}

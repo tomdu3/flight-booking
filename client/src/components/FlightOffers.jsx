@@ -45,9 +45,7 @@ export const FlightOffers = () => {
   
     return (
       <section className="section">
-        {/* Use consistent container like Navbar */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8"> 
-          {/* Apply Navbar styling: bg, blur, shadow, rounded, border, margin, padding */} 
           <div className="w-full bg-[var(--clr-card-background)]/70 backdrop-blur-md shadow-md rounded-xl mt-4 border border-[var(--clr-border)] p-6 md:p-10">
             <div className="text-center mb-12">
               <h2 className="section-title">Best Flight Offers</h2>
@@ -55,11 +53,9 @@ export const FlightOffers = () => {
                 Discover our most popular flight routes at competitive prices
               </p>
             </div>
-            
-            {/* Keep original grid for offers, but cards will now use a slightly different background */}
+          
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {offers.map((offer) => (
-                // Use a solid card background for contrast within the blurred section
                 <div key={offer.id} className="card bg-[var(--clr-card-background)] flex flex-col"> 
                   <div className="p-6 flex-grow">
                     <div className="flex items-center mb-6">
@@ -100,7 +96,6 @@ export const FlightOffers = () => {
                     </div>
                   </div>
                   
-                  {/* Slightly adjust button background if needed for contrast */}
                   <div className="bg-[var(--clr-background)] px-6 py-4 rounded-b-xl"> 
                     <button className="btn-primary w-full text-lg font-title py-3">
                       Book Now

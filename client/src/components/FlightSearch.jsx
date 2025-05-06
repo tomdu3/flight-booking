@@ -12,9 +12,7 @@ export const FlightSearch = () => {
 
   return (
     <section className="section flex flex-col items-center justify-center">
-      {/* Use consistent container like Navbar */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8"> 
-        {/* Apply Navbar styling: bg, blur, shadow, rounded, border, margin, padding */}
         <div className="w-full bg-[var(--clr-card-background)]/70 backdrop-blur-md shadow-md rounded-xl mt-4 border border-[var(--clr-border)] p-6 md:p-10"> 
           <div className="text-center mb-8">
             <h1 className="section-title font-title">Find Your Perfect Flight</h1>

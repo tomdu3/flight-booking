@@ -36,9 +36,7 @@ export const TopDestinations = () => {
   
     return (
       <section className="section">
-        {/* Use consistent container like Navbar */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8"> 
-          {/* Apply Navbar styling: bg, blur, shadow, rounded, border, margin, padding */} 
           <div className="w-full bg-[var(--clr-card-background)]/70 backdrop-blur-md shadow-md rounded-xl mt-4 border border-[var(--clr-border)] p-6 md:p-10">
             <div className="text-center mb-12">
               <h2 className="section-title">Top Destinations</h2>
@@ -47,10 +45,8 @@ export const TopDestinations = () => {
               </p>
             </div>
             
-            {/* Keep original grid, cards inside will have their own style */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {destinations.map((destination) => (
-                // The card itself maintains its specific styling for the image overlay effect
                 <div key={destination.id} className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer border border-[var(--clr-border)]"> 
                   <img 
                     className="h-72 w-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
