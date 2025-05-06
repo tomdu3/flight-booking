@@ -3,19 +3,21 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/f
 export const Contact = () => {
     return (
       // Use standard section class and background color
-      <section className="section bg-[var(--clr-background)]" id="contact">
-        <div className="container mx-auto px-4">
+      <section className="section flex flex-col items-center justify-center relative z-10" id="contact">
+        <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px] -z-10"></div>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Centered section title and subtitle */}
-          <h2 className="section-title">Get in Touch</h2>
-          <p className="section-subtitle">
+          <h2 className="section-title !text-white" style={{ textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)' }}>Get in Touch</h2>
+          <p className="section-subtitle !text-white/90" style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)' }}>
             Have questions about booking your flight or need assistance? Reach out to us using the information below or send us a message directly.
           </p>
 
-          <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-start">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-8 items-start">
             {/* Contact Information Section */}
-            <div className="mb-12 lg:mb-0">
-              <h3 className="text-3xl font-title font-semibold text-[var(--clr-text)] mb-8">Contact Information</h3>
-              <div className="space-y-8">
+            <div className="mb-8 lg:mb-0">
+              <div className="card p-8">
+                <h3 className="text-2xl font-title font-bold text-[var(--clr-text)] mb-6">Contact Information</h3>
+                <div className="space-y-6">
                 {/* Phone */}
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1 p-3 rounded-full bg-[var(--clr-primary)]/10">
@@ -52,9 +54,10 @@ export const Contact = () => {
                 </div>
               </div>
             </div>
+          </div>
 
             {/* Contact Form Section */}
-            <div> 
+            <div className="card p-8"> 
               <h3 className="text-2xl font-title font-bold text-[var(--clr-text)] mb-6">Send us a message</h3>
               <form className="space-y-5">
                 <div>
@@ -62,7 +65,7 @@ export const Contact = () => {
                   <input
                     type="text"
                     id="name"
-                    className="w-full rounded-lg border border-[var(--clr-border)] bg-white px-4 py-2.5 text-base font-text text-[var(--clr-text)] placeholder-gray-400 focus:border-[var(--clr-primary)] focus:ring-1 focus:ring-[var(--clr-primary)] transition-colors duration-200 outline-none"
+                    className="w-full rounded-lg border border-[var(--clr-border)] bg-[var(--clr-component-bg)] px-4 py-2.5 text-base font-text text-[var(--clr-text)] placeholder-[var(--clr-text-light)] hover:bg-[var(--clr-component-hover)] focus:border-[var(--clr-primary)] focus:ring-1 focus:ring-[var(--clr-primary)] transition-all duration-300 outline-none shadow-sm"
                     placeholder="Your full name"
                   />
                 </div>
@@ -72,7 +75,7 @@ export const Contact = () => {
                   <input
                     type="email"
                     id="email"
-                    className="w-full rounded-lg border border-[var(--clr-border)] bg-white px-4 py-2.5 text-base font-text text-[var(--clr-text)] placeholder-gray-400 focus:border-[var(--clr-primary)] focus:ring-1 focus:ring-[var(--clr-primary)] transition-colors duration-200 outline-none"
+                    className="w-full rounded-lg border border-[var(--clr-border)] bg-[var(--clr-component-bg)] px-4 py-2.5 text-base font-text text-[var(--clr-text)] placeholder-[var(--clr-text-light)] hover:bg-[var(--clr-component-hover)] focus:border-[var(--clr-primary)] focus:ring-1 focus:ring-[var(--clr-primary)] transition-all duration-300 outline-none shadow-sm"
                     placeholder="your.email@example.com"
                   />
                 </div>
@@ -82,7 +85,7 @@ export const Contact = () => {
                   <input
                     type="text"
                     id="subject"
-                    className="w-full rounded-lg border border-[var(--clr-border)] bg-white px-4 py-2.5 text-base font-text text-[var(--clr-text)] placeholder-gray-400 focus:border-[var(--clr-primary)] focus:ring-1 focus:ring-[var(--clr-primary)] transition-colors duration-200 outline-none"
+                    className="w-full rounded-lg border border-[var(--clr-border)] bg-[var(--clr-component-bg)] px-4 py-2.5 text-base font-text text-[var(--clr-text)] placeholder-[var(--clr-text-light)] hover:bg-[var(--clr-component-hover)] focus:border-[var(--clr-primary)] focus:ring-1 focus:ring-[var(--clr-primary)] transition-all duration-300 outline-none shadow-sm"
                     placeholder="How can we help?"
                   />
                 </div>
@@ -92,7 +95,7 @@ export const Contact = () => {
                   <textarea
                     id="message"
                     rows="4"
-                    className="w-full rounded-lg border border-[var(--clr-border)] bg-white px-4 py-2.5 text-base font-text text-[var(--clr-text)] placeholder-gray-400 focus:border-[var(--clr-primary)] focus:ring-1 focus:ring-[var(--clr-primary)] transition-colors duration-200 outline-none resize-none"
+                    className="w-full rounded-lg border border-[var(--clr-border)] bg-[var(--clr-component-bg)] px-4 py-2.5 text-base font-text text-[var(--clr-text)] placeholder-[var(--clr-text-light)] hover:bg-[var(--clr-component-hover)] focus:border-[var(--clr-primary)] focus:ring-1 focus:ring-[var(--clr-primary)] transition-all duration-300 outline-none shadow-sm resize-none"
                     placeholder="Your message here..."
                   ></textarea>
                 </div>

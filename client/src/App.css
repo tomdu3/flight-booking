@@ -6,19 +6,21 @@
   --fnt-title: 'Poppins', sans-serif;
   --fnt-mono: 'Space Mono', monospace;
 
-  /* Refined Color Palette */
-  --clr-primary: #007bff; /* A common, vibrant blue */
-  --clr-primary-dark: #0056b3; /* Darker shade for hover/active */
-  --clr-secondary: #343a40; /* Darker gray for better contrast with light text */
-  --clr-secondary-dark: #23272b; /* Darker shade for secondary elements */
-  --clr-accent: #28a745; /* A complementary green for accents/success */
-  --clr-background: #f8f9fa; /* Light background */
-  --clr-card-background: #ffffff; /* White for cards */
-  --clr-text: #212529; /* Dark text color for readability */
-  --clr-text-light: #6c757d; /* Lighter text for secondary info */
-  --clr-text-on-dark: #f8f9fa; /* Very light text for dark backgrounds */
-  --clr-border: #dee2e6; /* Light border color */
-  --clr-danger: #dc3545; /* Color for errors or warnings */
+  /* Enhanced Color Palette */
+  --clr-primary: #2563eb; /* Rich blue for primary actions */
+  --clr-primary-dark: #1d4ed8; /* Deeper blue for hover states */
+  --clr-secondary: #1e293b; /* Dark slate for secondary elements */
+  --clr-secondary-dark: #0f172a; /* Darker slate for contrast */
+  --clr-accent: #059669; /* Emerald green for accents/success */
+  --clr-background: #f1f5f9; /* Light slate background */
+  --clr-card-background: #ffffff; /* Pure white for cards */
+  --clr-text: #0f172a; /* Very dark slate for main text */
+  --clr-text-light: #475569; /* Medium slate for secondary text */
+  --clr-text-on-dark: #f8fafc; /* Very light slate for dark backgrounds */
+  --clr-border: #e2e8f0; /* Light slate for borders */
+  --clr-danger: #dc2626; /* Bright red for errors */
+  --clr-component-bg: #ffffff; /* White background for components */
+  --clr-component-hover: #f8fafc; /* Very light slate for hover states */
 }
 
 body {
@@ -59,7 +61,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4); /* Slightly darker overlay for better contrast */
+    background-color: rgba(15, 23, 42, 0.5); /* Darker slate overlay for better contrast */
   }
 }
 
@@ -77,12 +79,12 @@ body {
 }
 
 .section-title {
-  /* Removed font-title from @apply */
+  /* Default dark text for most sections */
   @apply text-4xl font-bold text-center mb-6 text-[var(--clr-text)];
 }
 
 .section-subtitle {
-  /* Removed font-text from @apply, use font-sans utility */
+  /* Default style for most sections */
   @apply text-lg font-sans text-center max-w-2xl mx-auto mb-12 text-[var(--clr-text-light)];
 }
 
@@ -102,7 +104,7 @@ body {
 
 /* General card styling */
 .card {
-  @apply bg-[var(--clr-card-background)] rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-[var(--clr-border)];
+  @apply bg-[var(--clr-component-bg)] rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-[var(--clr-border)] hover:bg-[var(--clr-component-hover)];
 }
 
 /* Simple open menu animation */
