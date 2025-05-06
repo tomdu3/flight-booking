@@ -5,7 +5,7 @@ import AuthContext from '../context/AuthContext';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    const { register, isAuthenticated, error, loading } = useContext(AuthContext);
+    const { register, isAuthenticated, error, loading, clearError } = useContext(AuthContext);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [confirmPasswordTouched, setConfirmPasswordTouched] = useState(false);
     const [formData, setFormData] = useState({
@@ -50,6 +50,16 @@ const RegisterPage = () => {
 
         return errors;
     };
+
+    // Clear error state when starting new registration
+    useEffect(() => {
+        if (!loading && error) {
+            const timer = setTimeout(() => {
+                clearError();
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [error, loading, clearError]);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -154,8 +164,9 @@ const RegisterPage = () => {
                             </div>
                         </div>
 
-                        {error && (
+                        {error && error.trim() && (
                             <div className="text-[var(--clr-danger)] text-sm text-center p-3 bg-[var(--clr-danger)]/10 rounded-md">
+                                {error}
                             </div>
                         )}
 
@@ -172,11 +183,7 @@ const RegisterPage = () => {
                             </button>
                         </div>
 
-                        {error && (
-                            <div className="mt-4">
-                                <p className="text-red-500 text-sm text-center">{error}</p>
-                            </div>
-                        )}
+                        {/* Removed duplicate error display */}
 
                         <div className="mt-4 text-center">
                             <p className="text-sm text-[var(--clr-text)]">

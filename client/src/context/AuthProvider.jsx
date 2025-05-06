@@ -102,6 +102,10 @@ export const AuthProvider = ({ children }) => {
     // Optional: Add function to fetch user profile if needed separately
     // const fetchUserProfile = async () => { ... };
 
+    const clearError = () => {
+        setError(null);
+    };
+
     const value = {
         user,
         token,
@@ -111,6 +115,7 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
+        clearError,
         // fetchUserProfile,
     };
 
