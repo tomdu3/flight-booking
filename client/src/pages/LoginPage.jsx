@@ -21,13 +21,20 @@ const LoginPage = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const result = await login({ email, password });
-        if (result.success) {
-            toast.success('Login successful!');
-            // Navigate to the intended destination or home
-            navigate(from);
-        } else {
-            toast.error(result.error || 'Login failed');
+        try {
+            const formData = { email, password };
+            const result = await login(formData);
+            console.log('Login result:', result);
+            
+            if (result.success) {
+                toast.success('Login successful!');
+                // Navigation will be handled by the useEffect hook
+            } else {
+                toast.error(result.error || 'Login failed. Please check your credentials.');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            toast.error('An error occurred. Please try again.');
         }
     };
 

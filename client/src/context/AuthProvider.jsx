@@ -32,21 +32,21 @@ export const AuthProvider = ({ children }) => {
         setError(null);
         try {
             const response = await apiClient.post('/auth/login', credentials);
-            const { user: userData } = response.data;
-            // Token is handled by cookies from the backend
-            setUser(userData);
-            setToken('authenticated'); // Set a dummy token to trigger isAuthenticated
-            // Update axios default headers
-            apiClient.defaults.withCredentials = true;
-            setLoading(false);
-            toast.success('Login successful'); // Add toast notification
-            return { success: true, user: userData };
+            console.log('Login response:', response.data);
+            
+            if (response.data.user) {
+                setUser(response.data.user);
+                setToken('authenticated'); // We're using a dummy token
+                setLoading(false);
+                return { success: true };
+            } else {
+                throw new Error('No user data received');
+            }
         } catch (err) {
-            console.error("Login error:", err.response?.data || err.message);
+            console.error('Login error:', err.response?.data || err.message);
             const errorMessage = err.response?.data?.message || 'Login failed';
             setError(errorMessage);
             setLoading(false);
-            toast.error(errorMessage); // Add toast notification
             return { success: false, error: errorMessage };
         }
     };
@@ -55,21 +55,23 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            // Backend might directly log in user or just register
             const response = await apiClient.post('/auth/register', userData);
-            // Assuming registration also logs in the user and returns token/user
-            if (response.data.token && response.data.user) {
-                const { token: receivedToken, user: newUser } = response.data;
-                setToken(receivedToken);
-                setUser(newUser);
+            console.log('Registration response:', response.data);
+
+            if (response.data.user) {
+                setUser(response.data.user);
+                setToken('authenticated'); // We're using a dummy token
+                setLoading(false);
+                return { success: true, message: 'Registration successful' };
+            } else {
+                throw new Error('No user data received');
             }
-            setLoading(false);
-            return { success: true, message: response.data.message || 'Registration successful' };
         } catch (err) {
-            console.error("Registration error:", err.response?.data || err.message);
-            setError(err.response?.data?.message || 'Registration failed');
+            console.error('Registration error:', err.response?.data || err.message);
+            const errorMessage = err.response?.data?.message || 'Registration failed';
+            setError(errorMessage);
             setLoading(false);
-            return { success: false, error: err.response?.data?.message || 'Registration failed' };
+            return { success: false, error: errorMessage };
         }
     };
 
