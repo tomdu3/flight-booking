@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import AuthContext from '../context/AuthContext';
 
 const LoginPage = () => {
@@ -21,9 +22,12 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const result = await login({ email, password });
-        // Navigation after successful login is handled by the useEffect hook
-        if (!result.success) {
-            // Error state is updated in AuthContext, and displayed below
+        if (result.success) {
+            toast.success('Login successful!');
+            // Navigate to the intended destination or home
+            navigate(from);
+        } else {
+            toast.error(result.error || 'Login failed');
         }
     };
 
