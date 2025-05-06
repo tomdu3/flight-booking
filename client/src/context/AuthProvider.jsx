@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import AuthContext from './AuthContext';
 
 // Configure axios base URL (Update if your backend runs elsewhere)
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }) => {
                 setUser(response.data.user);
                 setToken('authenticated'); // We're using a dummy token
                 setLoading(false);
+                toast.success('Login successful!');
                 return { success: true };
             } else {
                 throw new Error('No user data received');
@@ -47,6 +49,7 @@ export const AuthProvider = ({ children }) => {
             const errorMessage = err.response?.data?.message || 'Login failed';
             setError(errorMessage);
             setLoading(false);
+            toast.error(errorMessage);
             return { success: false, error: errorMessage };
         }
     };
@@ -58,20 +61,29 @@ export const AuthProvider = ({ children }) => {
             const response = await apiClient.post('/auth/register', userData);
             console.log('Registration response:', response.data);
 
-            if (response.data.user) {
+            if (response.data.success && response.data.user) {
                 setUser(response.data.user);
-                setToken('authenticated'); // We're using a dummy token
+                setToken('authenticated');
                 setLoading(false);
-                return { success: true, message: 'Registration successful' };
+                toast.success('Registration successful!');
+                return { 
+                    success: true, 
+                    message: response.data.message || 'Registration successful'
+                };
             } else {
-                throw new Error('No user data received');
+                throw new Error(response.data.message || 'Registration failed');
             }
         } catch (err) {
             console.error('Registration error:', err.response?.data || err.message);
-            const errorMessage = err.response?.data?.message || 'Registration failed';
+            const errorMessage = err.response?.data?.message || err.message || 'Registration failed';
             setError(errorMessage);
             setLoading(false);
-            return { success: false, error: errorMessage };
+            toast.error(errorMessage);
+            return { 
+                success: false, 
+                error: errorMessage,
+                field: err.response?.data?.field
+            };
         }
     };
 
