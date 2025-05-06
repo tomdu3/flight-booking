@@ -81,29 +81,28 @@ router.post('/register', registerValidator, async (req, res) => {
 // Login
 router.post('/login', loginValidator, async (req, res) => {
   try {
-    const { email, username, password } = req.body;
-    const isEmailLogin = !!email;
-    const userQuery = isEmailLogin
-      ? { email: email.trim() }
-      : { username: username.trim() };
+    const { email, password } = req.body;
+    console.log('Login attempt for email:', email);
 
     // Find user
-    const user = await User.findOne(userQuery);
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      console.log('User not found for email:', email);
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Verify password using model method
-    const isMatch = await user.comparePassword(password.trim());
+    // Check password
+    const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      console.log('Invalid password for user:', email);
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
+
+    console.log('Login successful for user:', email);
 
     // Generate tokens
     const accessToken = generateAccessToken(user._id);
     const refreshToken = generateRefreshToken(user._id);
-
-    // Set cookies
     setTokensCookies(res, accessToken, refreshToken);
 
     // Respond with user data
