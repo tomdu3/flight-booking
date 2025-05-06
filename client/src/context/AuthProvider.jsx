@@ -32,16 +32,22 @@ export const AuthProvider = ({ children }) => {
         setError(null);
         try {
             const response = await apiClient.post('/auth/login', credentials);
-            const { token: receivedToken, user: userData } = response.data;
-            setToken(receivedToken);
-            setUser(userData); // Assuming backend returns user data on login
+            const { user: userData } = response.data;
+            // Token is handled by cookies from the backend
+            setUser(userData);
+            setToken('authenticated'); // Set a dummy token to trigger isAuthenticated
+            // Update axios default headers
+            apiClient.defaults.withCredentials = true;
             setLoading(false);
-            return { success: true };
+            toast.success('Login successful'); // Add toast notification
+            return { success: true, user: userData };
         } catch (err) {
             console.error("Login error:", err.response?.data || err.message);
-            setError(err.response?.data?.message || 'Login failed');
+            const errorMessage = err.response?.data?.message || 'Login failed';
+            setError(errorMessage);
             setLoading(false);
-            return { success: false, error: err.response?.data?.message || 'Login failed' };
+            toast.error(errorMessage); // Add toast notification
+            return { success: false, error: errorMessage };
         }
     };
 
@@ -67,10 +73,16 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = () => {
-        setUser(null);
-        setToken(null);
-        // No backend call needed unless you have session invalidation logic
+    const logout = async () => {
+        try {
+            await apiClient.post('/auth/logout');
+            setUser(null);
+            setToken(null);
+            // Clear axios default headers
+            delete apiClient.defaults.headers.common['Authorization'];
+        } catch (err) {
+            console.error('Logout error:', err);
+        }
     };
 
     // Optional: Add function to fetch user profile if needed separately
