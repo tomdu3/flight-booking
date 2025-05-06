@@ -35,6 +35,8 @@ router.post('/register', registerValidator, async (req, res) => {
     username = username.trim();
     email = email.trim();
 
+    console.log('Registration attempt:', { username, email });
+
     // Check for existing user
     const existingUser = await User.findOne({
       $or: [{ email }, { username }]
@@ -42,17 +44,30 @@ router.post('/register', registerValidator, async (req, res) => {
 
     if (existingUser) {
       if (existingUser.email === email) {
-        return res.status(400).json({ message: 'Email already in use' });
+        console.log('Email already exists:', email);
+        return res.status(400).json({
+          success: false,
+          message: 'Email already in use',
+          field: 'email'
+        });
       }
-      return res.status(400).json({ message: 'Username already taken' });
+      console.log('Username already exists:', username);
+      return res.status(400).json({
+        success: false,
+        message: 'Username already taken',
+        field: 'username'
+      });
     }
 
     // Create user (password will be hashed by pre-save hook)
-    const user = await User.create({
+    const user = new User({
       username,
       email,
       password
     });
+
+    await user.save();
+    console.log('User created successfully:', { id: user._id, username });
 
     // Generate tokens
     const accessToken = generateAccessToken(user._id);
@@ -63,6 +78,8 @@ router.post('/register', registerValidator, async (req, res) => {
 
     // Respond without password
     res.status(201).json({
+      success: true,
+      message: 'Registration successful',
       user: {
         id: user._id,
         username: user.username,
