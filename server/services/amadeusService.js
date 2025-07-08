@@ -2,19 +2,18 @@ const Amadeus = require('amadeus');
 
 class AmadeusService {
     constructor() {
+        // Validate required environment variables
+        if (!process.env.AMADEUS_API_KEY || !process.env.AMADEUS_API_SECRET) {
+            throw new Error('AMADEUS_API_KEY and AMADEUS_API_SECRET must be configured in .env file');
+        }
+        
         this.amadeus = new Amadeus({
             clientId: process.env.AMADEUS_API_KEY,
             clientSecret: process.env.AMADEUS_API_SECRET,
-            hostname: 'production' // Use 'test' for testing, 'production' for live
+            hostname: 'test' // Use 'test' for testing, 'production' for live
         });
         
-        // Check if API credentials are configured
-        if (!process.env.AMADEUS_API_KEY || !process.env.AMADEUS_API_SECRET) {
-            console.warn('Amadeus API credentials not configured. Flight search will use mock data.');
-            this.useMockData = true;
-        } else {
-            this.useMockData = false;
-        }
+        console.log('Amadeus API initialized successfully');
     }
 
     async createBooking(flightOffer, passengers) {
@@ -84,39 +83,51 @@ class AmadeusService {
 
   async flightOffersSearch(params) {
     try {
-      // If no API credentials, return mock data
-      if (this.useMockData) {
-        console.log('Using mock flight data');
-        return this.getMockFlightData(params);
-      }
-
       // Validate required parameters
       if (!params.originLocationCode || !params.destinationLocationCode || !params.departureDate) {
-        throw new Error('Missing required search parameters');
+        throw new Error('Missing required search parameters: origin, destination, and departureDate are required');
       }
 
       // Format date properly for Amadeus API (YYYY-MM-DD)
       const formattedParams = {
         ...params,
         departureDate: this.formatDate(params.departureDate),
-        returnDate: params.returnDate ? this.formatDate(params.returnDate) : undefined
+        returnDate: params.returnDate ? this.formatDate(params.returnDate) : undefined,
+        adults: parseInt(params.adults) || 1,
+        currencyCode: params.currencyCode || 'USD'
       };
+
+      // Remove undefined values
+      Object.keys(formattedParams).forEach(key => {
+        if (formattedParams[key] === undefined) {
+          delete formattedParams[key];
+        }
+      });
 
       console.log('Amadeus API request params:', formattedParams);
       const response = await this.amadeus.shopping.flightOffersSearch.get(formattedParams);
       
       if (!response.data || response.data.length === 0) {
-        console.log('No flights found, returning mock data');
-        return this.getMockFlightData(params);
+        return [];
       }
       
+      console.log(`Found ${response.data.length} flight offers`);
       return this.formatFlightData(response.data);
     } catch (error) {
-      console.error('Amadeus API error:', error.response?.data || error.message);
+      console.error('Amadeus API error:', {
+        message: error.message,
+        description: error.description,
+        code: error.code,
+        response: error.response?.data
+      });
       
-      // Return mock data on API errors for development
-      console.log('API error occurred, falling back to mock data');
-      return this.getMockFlightData(params);
+      // Re-throw the error with more context
+      if (error.response?.data?.errors) {
+        const amadeusError = error.response.data.errors[0];
+        throw new Error(`Amadeus API Error: ${amadeusError.title} - ${amadeusError.detail}`);
+      }
+      
+      throw new Error(`Flight search failed: ${error.message}`);
     }
   }
 
@@ -138,7 +149,7 @@ class AmadeusService {
         stops: segments.length - 1,
         price: parseFloat(price.grandTotal),
         currency: price.currency,
-        bookingClass: offer.travelerPricings[0].fareOption,
+        bookingClass: offer.travelerPricings?.[0]?.fareOption || 'ECONOMY',
         availableSeats: parseInt(offer.numberOfBookableSeats) || 9, // Amadeus typically shows up to 9
         segments: segments.map(segment => ({
           departure: {
@@ -190,55 +201,6 @@ class AmadeusService {
     return date.toISOString().split('T')[0]; // YYYY-MM-DD format
   }
 
-  // Mock flight data for testing/development
-  getMockFlightData(params) {
-    const basePrice = 200 + Math.random() * 800;
-    const mockFlights = [];
-    
-    for (let i = 0; i < 5; i++) {
-      const departureTime = new Date();
-      departureTime.setDate(departureTime.getDate() + 1);
-      departureTime.setHours(6 + i * 3, Math.random() * 60);
-      
-      const arrivalTime = new Date(departureTime);
-      arrivalTime.setHours(arrivalTime.getHours() + 3 + Math.random() * 8);
-      
-      mockFlights.push({
-        id: `mock_${i + 1}`,
-        airline: ['AA', 'DL', 'UA', 'SW', 'F9'][i],
-        flightNumber: `${['AA', 'DL', 'UA', 'SW', 'F9'][i]}${1000 + i}`,
-        departureAirport: params.originLocationCode,
-        arrivalAirport: params.destinationLocationCode,
-        departureTime: departureTime.toISOString(),
-        arrivalTime: arrivalTime.toISOString(),
-        duration: `PT${3 + Math.floor(Math.random() * 8)}H${Math.floor(Math.random() * 60)}M`,
-        stops: Math.floor(Math.random() * 3),
-        price: Math.round(basePrice + i * 50),
-        currency: params.currencyCode || 'USD',
-        bookingClass: 'ECONOMY',
-        availableSeats: 3 + Math.floor(Math.random() * 7),
-        segments: [{
-          departure: {
-            airport: params.originLocationCode,
-            terminal: Math.random() > 0.5 ? String.fromCharCode(65 + Math.floor(Math.random() * 5)) : null,
-            time: departureTime.toISOString()
-          },
-          arrival: {
-            airport: params.destinationLocationCode,
-            terminal: Math.random() > 0.5 ? String.fromCharCode(65 + Math.floor(Math.random() * 5)) : null,
-            time: arrivalTime.toISOString()
-          },
-          carrierCode: ['AA', 'DL', 'UA', 'SW', 'F9'][i],
-          flightNumber: `${1000 + i}`,
-          aircraft: '32Q',
-          duration: `PT${3 + Math.floor(Math.random() * 8)}H${Math.floor(Math.random() * 60)}M`
-        }]
-      });
-    }
-    
-    console.log(`Generated ${mockFlights.length} mock flights`);
-    return mockFlights;
-  }
 }
 
 

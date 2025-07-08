@@ -74,43 +74,19 @@ router.get('/airports', authenticateWithRefresh, async (req, res) => {
       });
     }
 
-    // Try to get real airport data, fallback to mock data
-    let airports = [];
-    
-    try {
-      const response = await amadeusService.amadeus.referenceData.locations.get({
-        keyword,
-        subType: 'AIRPORT',
-        view: 'LIGHT'
-      });
+    const response = await amadeusService.amadeus.referenceData.locations.get({
+      keyword,
+      subType: 'AIRPORT',
+      view: 'LIGHT'
+    });
 
-      airports = response.data.map(airport => ({
-        id: airport.id,
-        name: airport.name,
-        iataCode: airport.iataCode,
-        city: airport.address?.cityName || 'Unknown',
-        country: airport.address?.countryName || 'Unknown'
-      }));
-    } catch (amadeusError) {
-      console.log('Amadeus API not available, using mock airport data');
-      // Mock airport data for common search terms
-      const mockAirports = [
-        { id: 'JFK', name: 'John F Kennedy International Airport', iataCode: 'JFK', city: 'New York', country: 'United States' },
-        { id: 'LAX', name: 'Los Angeles International Airport', iataCode: 'LAX', city: 'Los Angeles', country: 'United States' },
-        { id: 'LHR', name: 'London Heathrow Airport', iataCode: 'LHR', city: 'London', country: 'United Kingdom' },
-        { id: 'CDG', name: 'Charles de Gaulle Airport', iataCode: 'CDG', city: 'Paris', country: 'France' },
-        { id: 'DXB', name: 'Dubai International Airport', iataCode: 'DXB', city: 'Dubai', country: 'United Arab Emirates' },
-        { id: 'NRT', name: 'Narita International Airport', iataCode: 'NRT', city: 'Tokyo', country: 'Japan' },
-        { id: 'SYD', name: 'Sydney Kingsford Smith Airport', iataCode: 'SYD', city: 'Sydney', country: 'Australia' },
-        { id: 'FRA', name: 'Frankfurt Airport', iataCode: 'FRA', city: 'Frankfurt', country: 'Germany' }
-      ];
-      
-      airports = mockAirports.filter(airport => 
-        airport.name.toLowerCase().includes(keyword.toLowerCase()) ||
-        airport.city.toLowerCase().includes(keyword.toLowerCase()) ||
-        airport.iataCode.toLowerCase().includes(keyword.toLowerCase())
-      );
-    }
+    const airports = response.data.map(airport => ({
+      id: airport.id,
+      name: airport.name,
+      iataCode: airport.iataCode,
+      city: airport.address?.cityName || 'Unknown',
+      country: airport.address?.countryName || 'Unknown'
+    }));
 
     res.json({
       success: true,
