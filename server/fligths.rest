@@ -8,10 +8,9 @@ Content-Type: application/json
   "password": "password1!" 
 }
 
-### Flight Search - One Way
-GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15
+### Flight Search - One Way (Test with current date)
+GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-08-15
 Content-Type: application/json
-Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 
 ### Flight Search - Round Trip
 GET http://localhost:3000/api/flights/search?origin=JFK&destination=LAX&departureDate=2025-04-15&returnDate=2025-04-20
@@ -65,7 +64,6 @@ Cookie: accessToken=your_token_here; refreshToken=your_refresh_token_here
 ### Bookings
 ### Create Booking
 POST http://localhost:3000/api/bookings
-Authorization: Bearer {{auth_token}}
 Content-Type: application/json
 
 {
@@ -79,7 +77,7 @@ Content-Type: application/json
       "arrivalTime": "2025-04-15T15:04:00",
       "duration": "PT11H5M",
       "stops": 1,
-      "price": "200.63",
+      "price": 200.63,
       "currency": "USD",
       "bookingClass": "STANDARD",
       "availableSeats": 3,
@@ -134,13 +132,13 @@ Content-Type: application/json
 
 ### Get User Booking
 GET http://localhost:3000/api/bookings
-Authorization: Bearer {{auth_token}}
+Content-Type: application/json
 
 ### Get Booking by ID
 GET http://localhost:3000/api/bookings/{{booking_id}}
-Authorization: Bearer {{auth_token}}
+Content-Type: application/json
 
 ### Cancel Booking
 DELETE http://localhost:3000/api/bookings/{{booking_id}}
-Authorization: Bearer {{auth_token}}
+Content-Type: application/json
 
