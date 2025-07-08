@@ -18,6 +18,14 @@ router.post('/', authenticateWithRefresh, async (req, res) => {
       });
     }
 
+    // Validate and convert price to number
+    const price = typeof flightOffer.price === 'string' ? parseFloat(flightOffer.price) : flightOffer.price;
+    if (isNaN(price)) {
+      return res.status(400).json({ 
+        message: 'Invalid price format' 
+      });
+    }
+
     // Create booking in Amadeus
     const amadeusResponse = await amadeusService.createBooking(flightOffer, passengers);
     
@@ -25,10 +33,13 @@ router.post('/', authenticateWithRefresh, async (req, res) => {
     const booking = new Booking({
       user: userId,
       amadeusBookingId: amadeusResponse.id,
-      flightOffer: flightOffer,
+      flightOffer: {
+        ...flightOffer,
+        price: price // Ensure price is a number
+      },
       passengers: passengers,
-      totalPrice: flightOffer.price,
-      currency: flightOffer.currency,
+      totalPrice: price,
+      currency: flightOffer.currency || 'USD',
       bookingReference: generateBookingReference(),
       status: 'confirmed',
       paymentStatus: 'paid' // Assuming immediate payment
@@ -50,7 +61,10 @@ router.post('/', authenticateWithRefresh, async (req, res) => {
         flight: {
           number: booking.flightOffer.flightNumber,
           departure: booking.flightOffer.departureTime,
-          arrival: booking.flightOffer.arrivalTime
+          arrival: booking.flightOffer.arrivalTime,
+          from: booking.flightOffer.departureAirport,
+          to: booking.flightOffer.arrivalAirport,
+          airline: booking.flightOffer.airline
         },
         passengers: booking.passengers.map(p => ({
           name: `${p.firstName} ${p.lastName}`,
