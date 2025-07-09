@@ -4,11 +4,9 @@ import { Home } from '../pages/Home';
 import { About } from '../pages/About';
 import LoginPage from '../pages/LoginPage.jsx';
 import RegisterPage from '../pages/RegisterPage.jsx';
-import ProfilePage from '../pages/ProfilePage.jsx'; // Import ProfilePage
-import ProtectedRoute from './ProtectedRoute.jsx'; // Import ProtectedRoute
-
-// Import other pages as needed
-// import FlightSearchPage from '../pages/FlightSearchPage';
+import ProfilePage from '../pages/ProfilePage.jsx';
+import { SearchResults } from '../pages/SearchResults.jsx';
+import ProtectedRoute from './ProtectedRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -39,11 +37,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      // Example of other routes:
-      // {
-      //   path: '/flights',
-      //   element: <FlightSearchPage />,
-      // },
+      {
+        path: '/search-results',
+        element: (
+          <ProtectedRoute>
+            <SearchResults />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
