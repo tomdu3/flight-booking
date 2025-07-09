@@ -63,10 +63,10 @@ router.get('/search', authenticateWithRefresh, async (req, res) => {
   }
 });
 
-// Airport autocomplete endpoint
-router.get('/airports', authenticateWithRefresh, async (req, res) => {
+// Public airport and city search endpoint (no authentication required)
+router.get('/airports', async (req, res) => {
   try {
-    const { keyword } = req.query;
+    const { keyword, searchType = 'all' } = req.query;
 
     if (!keyword || keyword.length < 2) {
       return res.status(400).json({
@@ -74,23 +74,13 @@ router.get('/airports', authenticateWithRefresh, async (req, res) => {
       });
     }
 
-    const response = await amadeusService.amadeus.referenceData.locations.get({
-      keyword,
-      subType: 'AIRPORT',
-      view: 'LIGHT'
-    });
-
-    const airports = response.data.map(airport => ({
-      id: airport.id,
-      name: airport.name,
-      iataCode: airport.iataCode,
-      city: airport.address?.cityName || 'Unknown',
-      country: airport.address?.countryName || 'Unknown'
-    }));
+    // Enhanced search supporting both airports and cities
+    const airports = await amadeusService.searchLocations(keyword, searchType);
 
     res.json({
       success: true,
-      airports
+      airports,
+      count: airports.length
     });
 
   } catch (error) {
@@ -98,6 +88,27 @@ router.get('/airports', authenticateWithRefresh, async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error searching airports',
+      error: error.message
+    });
+  }
+});
+
+// Get comprehensive airport data for frontend preloading
+router.get('/airports/popular', async (req, res) => {
+  try {
+    const popularAirports = await amadeusService.getPopularAirports();
+    
+    res.json({
+      success: true,
+      airports: popularAirports,
+      count: popularAirports.length
+    });
+
+  } catch (error) {
+    console.error('Popular airports error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching popular airports',
       error: error.message
     });
   }
