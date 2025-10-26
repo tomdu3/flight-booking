@@ -1,5 +1,8 @@
+### Define variables
+@baseUrl = http://localhost:3000
+
 ### Register User
-POST http://localhost:3000/api/auth/register
+POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
@@ -9,7 +12,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/auth/register
+POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
@@ -20,7 +23,7 @@ Content-Type: application/json
 
 ### Login User - bad credentials
 
-POST http://localhost:3000/api/auth/login
+POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -29,7 +32,7 @@ Content-Type: application/json
 }
 
 ### Login User - good credentials
-POST http://localhost:3000/api/auth/login
+POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -39,7 +42,7 @@ Content-Type: application/json
 
 ### Login User - good credentials
 
-POST http://localhost:3000/api/auth/login
+POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -49,31 +52,31 @@ Content-Type: application/json
 
 ### Logout User
 
-POST http://localhost:3000/api/auth/logout
+POST {{baseUrl}}/api/auth/logout
 Content-Type: application/json
 
 
 ### Test protected route
 
-GET http://localhost:3000/api/test
+GET {{baseUrl}}/api/test
 
 
 ### Refresh token route
-POST http://localhost:3000/api/auth/refresh
+POST {{baseUrl}}/api/auth/refresh
 Content-Type: application/json
 
 ### User Routes
 # Get current user profile
-GET http://localhost:3000/api/users/profile
+GET {{baseUrl}}/api/users/profile
 
 ### Update user profile
-PUT http://localhost:3000/api/users/profile
+PUT {{baseUrl}}/api/users/profile
 Content-Type: application/json
 
 {
   "email": "tomdu3@ymail.com",
-  "currentPassword": "pas1sword!!",
-  "newPassword": "password1!",
+  "currentPassword": "pas1sword1!",
+  "newPassword": "password!!",
   "preferences": {
     "seat": "window",
     "meal": "breakfast",
